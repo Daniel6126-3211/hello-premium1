@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello Premium — Digital Support Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1128;
+    --navy-2:#101A3D;
+    --blue:#1E4FDB;
+    --blue-light:#4C74F0;
+    --gold:#D4A94E;
+    --white:#F7F8FA;
+    --slate:#5B6478;
+    --slate-dark:#8A93A8;
+    --line:rgba(255,255,255,0.08);
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white);
+    color:var(--navy);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* verification tag - the signature element */
+  .vtag{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--slate);
+    background:rgba(91,100,120,0.08);
+    border:1px solid rgba(91,100,120,0.15);
+    border-radius:6px;
+    padding:4px 8px;
+    text-transform:uppercase;
+  }
+  .vtag.gold{ color:#8a6a1f; background:rgba(212,169,78,0.12); border-color:rgba(212,169,78,0.35); }
+  .vtag .dot{width:6px;height:6px;border-radius:50%;background:#2CB67D;flex-shrink:0;}
+
+  /* ===== TOP BAR ===== */
+  .topbar{
+    background:var(--navy);
+    color:var(--slate-dark);
+    font-size:13px;
+  }
+  .topbar .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:8px; padding-bottom:8px;
+  }
+  .topbar a{color:var(--slate-dark); display:flex; align-items:center; gap:6px;}
+  .topbar .care{color:var(--white); font-weight:500;}
+  .topbar .wa-link{color:#4ADE80; font-weight:600;}
+
+  /* ===== NAV ===== */
+  header.nav{
+    background:var(--navy);
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:100;
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    color:var(--white);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:19px;
+  }
+  .brand .mark{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg,var(--blue),var(--blue-light));
+    display:flex; align-items:center; justify-content:center;
+    color:white; font-size:16px; font-weight:700;
+    box-shadow:0 4px 14px rgba(30,79,219,0.4);
+  }
+  nav.links{
+    display:flex; gap:28px;
+    font-size:13.5px; font-weight:500;
+    color:var(--slate-dark);
+  }
+  nav.links a{transition:color .15s;}
+  nav.links a:hover{color:var(--white);}
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border-radius:10px; font-weight:600; font-size:14px;
+    padding:11px 20px; cursor:pointer; border:none;
+    transition:transform .15s, box-shadow .15s, background .15s;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--blue),var(--blue-light));
+    color:white; box-shadow:0 4px 16px rgba(30,79,219,0.35);
+  }
+  .btn-primary:hover{box-shadow:0 6px 22px rgba(30,79,219,0.5);}
+  .btn-ghost{
+    background:rgba(255,255,255,0.06); color:var(--white);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.1);}
+  .btn-gold{
+    background:linear-gradient(135deg,#D4A94E,#E6C578);
+    color:#2A2205;
+  }
+  .btn-block{width:100%;}
+  .menu-toggle{display:none; background:none; border:none; color:white; font-size:24px; cursor:pointer;}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(30,79,219,0.35), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(212,169,78,0.12), transparent 40%),
+      linear-gradient(180deg,var(--navy) 0%, var(--navy-2) 100%);
+    color:white;
+    padding:64px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:600; letter-spacing:0.04em;
+    color:var(--gold); text-transform:uppercase;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:''; width:16px; height:1px; background:var(--gold);}
+  .hero h1{
+    font-size:44px; line-height:1.12; font-weight:700; color:white;
+    margin-bottom:20px; max-width:560px;
+  }
+  .hero p.sub{
+    font-size:17px; color:var(--slate-dark); max-width:480px; margin-bottom:32px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px;}
+  .hero-visual{
+    position:relative;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 30px 70px rgba(0,0,0,0.5);
+  }
+  .hero-visual img{width:100%; height:460px; object-fit:cover;}
+  .hero-visual .badge-float{
+    position:absolute; bottom:18px; left:18px; right:18px;
+    background:rgba(10,17,40,0.72);
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:14px;
+    padding:14px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px;
+  }
+  .badge-float .l{font-size:12px; color:var(--slate-dark);}
+  .badge-float .v{font-family:'Space Grotesk'; font-weight:700; font-size:16px; color:white;}
+
+  .trust-strip{
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+
+  /* visitor counter chip */
+  .visitor-chip{
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px 16px;
+    font-size:13px;
+    color:var(--slate-dark);
+  }
+  .visitor-chip .num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:500; color:white; font-size:14px;
+  }
+  .visitor-chip .dot{width:7px;height:7px;border-radius:50%; background:#2CB67D; box-shadow:0 0 0 3px rgba(44,182,125,0.25);}
+
+  /* ===== SECTION HEADERS ===== */
+  .section{padding:80px 0;}
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head .eyebrow{color:var(--blue);}
+  .section-head h2{font-size:32px; font-weight:700; color:var(--navy); margin-bottom:12px;}
+  .section-head p{color:var(--slate); font-size:15.5px;}
+  .section.alt{background:var(--navy);}
+  .section.alt .section-head h2{color:white;}
+  .section.alt .section-head p{color:var(--slate-dark);}
+  .section.alt .eyebrow{color:var(--gold);}
+
+  /* ===== SERVICE GRID ===== */
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .card{
+    background:white;
+    border:1px solid #EAECF1;
+    border-radius:var(--radius);
+    overflow:hidden;
+    transition:transform .2s, box-shadow .2s;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:0 20px 40px rgba(10,17,40,0.1);}
+  .card .img{height:150px; overflow:hidden; position:relative;}
+  .card .img img{width:100%; height:100%; object-fit:cover;}
+  .card .icon-badge{
+    position:absolute; top:14px; left:14px;
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(10,17,40,0.75);
+    backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px;
+  }
+  .card .body{padding:20px 20px 22px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .card h3{font-size:17px; font-weight:700; color:var(--navy);}
+  .card p{font-size:13.5px; color:var(--slate); flex:1;}
+  .card .price{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--blue); font-weight:500;}
+  .card .cta{
+    margin-top:6px;
+    font-size:13.5px; font-weight:600; color:var(--blue);
+    display:flex; align-items:center; gap:6px;
+  }
+  .card .cta::after{content:'→'; transition:transform .15s;}
+  .card:hover .cta::after{transform:translateX(3px);}
+
+  /* ===== WHY CHOOSE ===== */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .why-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px;
+  }
+  .why-card .num{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:13px; margin-bottom:14px;}
+  .why-card h3{color:white; font-size:17px; margin-bottom:8px;}
+  .why-card p{color:var(--slate-dark); font-size:13.5px;}
+
+  /* ===== FLOW STRIP ===== */
+  .flow{
+    display:flex; align-items:center; gap:0; flex-wrap:wrap;
+    background:white; border:1px solid #EAECF1; border-radius:var(--radius);
+    padding:28px; overflow-x:auto;
+  }
+  .flow-step{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    min-width:110px; text-align:center; padding:0 6px;
+  }
+  .flow-step .circ{
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(30,79,219,0.08); color:var(--blue);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono'; font-size:12px; font-weight:600;
+    border:1px solid rgba(30,79,219,0.2);
+  }
+  .flow-step span.label{font-size:11.5px; color:var(--slate); font-weight:500;}
+  .flow-arrow{color:#C7CCD9; font-size:16px; padding:0 4px;}
+
+  /* ===== SECURITY BANNER ===== */
+  .security-banner{
+    background:linear-gradient(135deg,#1a1033,#0A1128);
+    border:1px solid rgba(212,169,78,0.3);
+    border-radius:20px;
+    padding:36px 40px;
+    display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:flex-start;
+  }
+  .security-banner .shield{font-size:32px;}
+  .security-banner h3{color:var(--gold); font-size:19px; margin-bottom:10px;}
+  .security-banner p{color:var(--slate-dark); font-size:14px; margin-bottom:14px;}
+  .security-list{display:flex; flex-wrap:wrap; gap:10px;}
+  .security-list .vtag{color:#e6c8c8; background:rgba(220,80,80,0.1); border-color:rgba(220,80,80,0.3);}
+
+  /* ===== AI ASSISTANT PREVIEW ===== */
+  .ai-panel{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px; align-items:center;
+  }
+  .chat-mock{
+    background:var(--navy-2); border:1px solid var(--line); border-radius:18px;
+    padding:20px; box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+  .chat-head{display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:16px;}
+  .chat-head .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--blue-light)); display:flex;align-items:center;justify-content:center; font-size:13px;}
+  .chat-head span{color:white; font-weight:600; font-size:14px;}
+  .bubble{max-width:80%; padding:11px 14px; border-radius:12px; font-size:13.5px; margin-bottom:12px; line-height:1.45;}
+  .bubble.ai{background:rgba(255,255,255,0.07); color:var(--slate-dark); border-bottom-left-radius:3px;}
+  .bubble.user{background:var(--blue); color:white; margin-left:auto; border-bottom-right-radius:3px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+  .chip{
+    font-size:12px; padding:7px 12px; border-radius:20px;
+    background:rgba(76,116,240,0.15); color:var(--blue-light);
+    border:1px solid rgba(76,116,240,0.3);
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:#070C1E; color:var(--slate-dark); padding:60px 0 24px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:32px; padding-bottom:40px;}
+  .footer-grid h4{color:white; font-size:13px; margin-bottom:16px; letter-spacing:0.02em;}
+  .footer-grid ul{list-style:none;}
+  .footer-grid li{margin-bottom:10px; font-size:13.5px;}
+  .footer-grid a:hover{color:white;}
+  .footer-brand p{font-size:13.5px; margin:14px 0 18px; max-width:280px; color:var(--slate-dark);}
+  .footer-legal{
+    border-top:1px solid var(--line); padding-top:22px;
+    font-size:12px; color:#576080; line-height:1.7;
+  }
+  .footer-legal b{color:#8A93A8;}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:22px; font-size:12.5px; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float{
+    position:fixed; bottom:24px; right:24px; z-index:200;
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(37,211,102,0.5);
+    cursor:pointer; border:none;
+    animation:pulse 2.5s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 10px 30px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.5);}
+    70%{box-shadow:0 10px 30px rgba(37,211,102,0.5), 0 0 0 14px rgba(37,211,102,0);}
+    100%{box-shadow:0 10px 30px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0);}
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:980px){
+    nav.links{display:none;}
+    .menu-toggle{display:block;}
+    .hero .wrap{grid-template-columns:1fr; gap:36px;}
+    .hero-visual img{height:320px;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:1fr;}
+    .ai-panel{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:repeat(2,1fr);}
+    .security-banner{grid-template-columns:1fr;}
+  }
+  @media (max-width:600px){
+    .hero h1{font-size:32px;}
+    .grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:28px;}
+    .nav-actions .btn-ghost{display:none;}
+    .topbar .care{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="wa-link" id="topWaBtn">💬 Chat on WhatsApp</a>
+    <a class="care">Customer Care: 09017468095</a>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="brand"><div class="mark">HP</div> Hello Premium</div>
+    <nav class="links">
+      <a href="#home">Home</a>
+      <a href="#services">Banking</a>
+      <a href="#services">POS &amp; ATM</a>
+      <a href="#services">Bills</a>
+      <a href="#services">Social Media</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#ai">AI Assistant</a>
+      <a href="#security">Support</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost">Sign In</a>
+      <a class="btn btn-primary">Get Started</a>
+    </div>
+    <button class="menu-toggle">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Independent Digital Support Platform</div>
+      <h1>Your Digital Support Hub for Banking, Business, Social Media &amp; Opportunities</h1>
+      <p class="sub">AI-guided banking and digital support with human assistance — get guided help for Nigerian banking services, POS solutions, bills, digital accounts, social-media setup and verified job opportunities, all in one place.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary">Get Started</a>
+        <a class="btn btn-ghost">Talk to Customer Care</a>
+      </div>
+      <div class="trust-strip">
+        <span class="vtag gold">★ Not a bank — independent support service</span>
+        <span class="vtag"><span class="dot"></span> Human support: 09017468095</span>
+      </div>
+    </div>
+    <div>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=900&auto=format&fit=crop" alt="Nigerian professional using a banking app on a smartphone">
+        <div class="badge-float">
+          <div>
+            <div class="l">Visitors to Hello Premium</div>
+            <div class="v mono" id="visitorCount">Loading…</div>
+          </div>
+          <span class="vtag" style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2); color:#cfd6e6;"><span class="dot"></span> Live · server-recorded</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Service Discovery</div>
+      <h2>Everything routed through one dashboard</h2>
+      <p>Select a category and the AI Assistant will guide you to the right process — including official links where relevant.</p>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=600&auto=format&fit=crop" alt="Banking app on phone">
+          <div class="icon-badge">🏦</div>
+        </div>
+        <div class="body">
+          <h3>Banking Support</h3>
+          <p>Account guidance, login assistance, PIN/security guidance and banking complaints — routed to your bank's official channels.</p>
+          <div class="cta">Get Started</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=600&auto=format&fit=crop" alt="POS terminal in a Nigerian shop">
+          <div class="icon-badge">💳</div>
+        </div>
+        <div class="body">
+          <h3>POS &amp; ATM</h3>
+          <p>POS terminal market research, provider comparisons and ATM-card assistance.</p>
+          <div class="price">Service charge from ₦1,500</div>
+          <div class="cta">Get Started</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=600&auto=format&fit=crop" alt="Mobile bill payment">
+          <div class="icon-badge">⚡</div>
+        </div>
+        <div class="body">
+          <h3>Bills &amp; Payments</h3>
+          <p>Guidance for airtime, data, electricity, cable and other legitimate bill services through licensed providers.</p>
+          <div class="cta">Get Started</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop" alt="Social media on smartphone">
+          <div class="icon-badge">📱</div>
+        </div>
+        <div class="body">
+          <h3>Social Media</h3>
+          <p>Setup assistance for TikTok, Facebook, Instagram, Gmail and business/creator pages.</p>
+          <div class="cta">Get Started</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=600&auto=format&fit=crop" alt="Nigerian professionals at work">
+          <div class="icon-badge">💼</div>
+        </div>
+        <div class="body">
+          <h3>Nigerian Jobs</h3>
+          <p>Government and private-sector opportunities with requirements, deadlines and official application links.</p>
+          <div class="cta">Get Started</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="img">
+          <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=600&auto=format&fit=crop" alt="AI chat assistant interface">
+          <div class="icon-badge">🤖</div>
+        </div>
+        <div class="body">
+          <h3>AI Assistant</h3>
+          <p>Interactive assistant that identifies the right service and explains the process — never asks for passwords, PINs or OTPs.</p>
+          <div class="cta">Chat Now</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#EFF2F8; padding-top:0;">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:28px;">
+      <div class="eyebrow">How It Works</div>
+      <h2>One consistent request flow, every time</h2>
+    </div>
+    <div class="flow">
+      <div class="flow-step"><div class="circ">01</div><span class="label">Discover</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">02</div><span class="label">Ask AI</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">03</div><span class="label">Select</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">04</div><span class="label">Verify Info</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">05</div><span class="label">Request</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">06</div><span class="label">WhatsApp</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="circ">07</div><span class="label">Track</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ai">
+  <div class="wrap ai-panel">
+    <div>
+      <div class="eyebrow" style="color:var(--blue);">Hello Premium AI</div>
+      <h2 style="font-size:30px; margin-bottom:14px;">Guided, not automatic</h2>
+      <p style="color:var(--slate); font-size:15px; margin-bottom:20px;">The assistant helps identify the right service and explains next steps. It directs you to official bank, government or platform channels for anything involving authentication — it never logs into an account on your behalf.</p>
+      <div class="security-list" style="gap:10px;">
+        <span class="vtag" style="color:#1a5c37; background:rgba(44,182,125,0.1); border-color:rgba(44,182,125,0.35);">✓ No password requests</span>
+        <span class="vtag" style="color:#1a5c37; background:rgba(44,182,125,0.1); border-color:rgba(44,182,125,0.35);">✓ No OTP requests</span>
+        <span class="vtag" style="color:#1a5c37; background:rgba(44,182,125,0.1); border-color:rgba(44,182,125,0.35);">✓ No PIN or CVV requests</span>
+      </div>
+    </div>
+    <div class="chat-mock">
+      <div class="chat-head"><div class="mark">🤖</div><span>Hello Premium AI</span></div>
+      <div class="bubble ai">Welcome to Hello Premium. What do you need help with today?</div>
+      <div class="bubble user">I want to open a bank account</div>
+      <div class="bubble ai">Which type of account are you interested in?
+        <div class="chip-row">
+          <span class="chip">Savings</span><span class="chip">Current</span><span class="chip">Student</span><span class="chip">Business</span>
+        </div>
+      </div>
+      <div class="bubble user">Savings</div>
+      <div class="bubble ai">Got it. I'll show you the official registration link for your chosen bank — you'll complete KYC, OTP and PIN setup directly on their platform. We never collect that information.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why Choose Hello Premium</div>
+      <h2>Built around trust, not shortcuts</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="num mono">Secure</div><h3>No credential requests</h3><p>We never ask for banking passwords, ATM PINs, OTPs or CVVs — on this platform or via customer support.</p></div>
+      <div class="why-card"><div class="num mono">Fast</div><h3>Right service, quickly</h3><p>The AI Assistant routes you to the correct process instead of leaving you to search.</p></div>
+      <div class="why-card"><div class="num mono">Guided</div><h3>Step-by-step support</h3><p>Clear explanations plus official links — you complete authentication on the institution's own channel.</p></div>
+      <div class="why-card"><div class="num mono">Human</div><h3>Real customer care</h3><p>Every request can be escalated to a human agent on WhatsApp.</p></div>
+      <div class="why-card"><div class="num mono">Verified</div><h3>Sourced information</h3><p>Job listings and POS pricing display a source and the date they were last checked.</p></div>
+      <div class="why-card"><div class="num mono">Unified</div><h3>One platform</h3><p>Banking, digital services, jobs and support access in a single dashboard.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="security">
+  <div class="wrap">
+    <div class="security-banner">
+      <div class="shield">🛡️</div>
+      <div>
+        <h3>Protect Your Information</h3>
+        <p>We will never ask you to provide your banking password, ATM PIN, OTP, CVV or full card number — on this platform, by phone, or on WhatsApp.</p>
+        <div class="security-list">
+          <span class="vtag">Never share your OTP</span>
+          <span class="vtag">Never share your ATM PIN</span>
+          <span class="vtag">Never share your password</span>
+          <span class="vtag">Never share your CVV</span>
+          <span class="vtag">Never share a full card number</span>
+          <span class="vtag">Always use official bank apps/websites</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand" style="color:white;"><div class="mark">HP</div> Hello Premium</div>
+        <p>Banking Support • Digital Services • Jobs • Social Media Assistance — an independent Nigerian digital support platform.</p>
+        <a class="btn btn-primary" style="background:#25D366; box-shadow:none;">💬 Chat With Customer Care</a>
+      </div>
+      <div><h4>Services</h4><ul>
+        <li><a href="#services">Banking Services</a></li>
+        <li><a href="#services">POS</a></li>
+        <li><a href="#services">ATM Cards</a></li>
+        <li><a href="#services">Bills</a></li>
+        <li><a href="#services">Social Media</a></li>
+      </ul></div>
+      <div><h4>Platform</h4><ul>
+        <li><a href="#jobs">Jobs</a></li>
+        <li><a href="#ai">AI Assistant</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#security">Security</a></li>
+      </ul></div>
+      <div><h4>Company</h4><ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul></div>
+      <div><h4>Customer Care</h4><ul>
+        <li>09017468095</li>
+        <li><a id="footerWaBtn">Chat on WhatsApp</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-legal">
+      <b>Legal Disclaimer:</b> Hello Premium is an independent digital support and information platform. It is not a bank, payment processor, government agency, recruitment agency, or social-media company. References to banks, companies, government agencies or other organizations do not imply affiliation or endorsement unless explicitly stated.<br><br>
+      Never provide your password, PIN, OTP, CVV, full card number or other confidential authentication information to our platform or customer support. Use official institutional channels for authentication and financial transactions.
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Hello Premium. All rights reserved.</span>
+      <span class="mono" id="footerVisitorCount">Visitors: —</span>
+    </div>
+  </div>
+</footer>
+
+<button class="wa-float" id="floatWaBtn" title="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39c1.44.79 3.06 1.2 4.72 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.93 6.45 17.5 2 12.04 2zm0 18.09h-.01c-1.47 0-2.92-.4-4.19-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.03 8.03 0 0 1-1.24-4.33c0-4.5 3.66-8.16 8.17-8.16 2.18 0 4.23.85 5.77 2.4a8.14 8.14 0 0 1 2.39 5.77c0 4.5-3.67 8.17-8.11 8.17z"/></svg>
+</button>
+
+<script>
+  // ---- Persistent global visitor counter (survives reloads via window.storage) ----
+  const COUNTER_KEY = 'global_visitor_count';
+
+  async function initVisitorCounter(){
+    const els = [document.getElementById('visitorCount'), document.getElementById('footerVisitorCount')];
+    try{
+      let current = 0;
+      try{
+        const res = await window.storage.get(COUNTER_KEY, true); // shared across all visitors
+        current = res ? parseInt(res.value, 10) || 0 : 0;
+      }catch(e){
+        current = 0; // key doesn't exist yet
+      }
+      // increment once per session (per tab load)
+      if(!sessionStorage.getItem('hp_counted')){
+        current += 1;
+        await window.storage.set(COUNTER_KEY, String(current), true);
+        sessionStorage.setItem('hp_counted', '1');
+      }
+      document.getElementById('visitorCount').textContent = current.toLocaleString();
+      document.getElementById('footerVisitorCount').textContent = 'Visitors: ' + current.toLocaleString();
+    }catch(err){
+      document.getElementById('visitorCount').textContent = '—';
+      document.getElementById('footerVisitorCount').textContent = 'Visitors: —';
+      console.error('Visitor counter error:', err);
+    }
+  }
+  initVisitorCounter();
+
+  // ---- WhatsApp deep link (user must press send manually) ----
+  function openWhatsApp(){
+    const phone = '2349017468095';
+    const message = encodeURIComponent(
+      "Hello Customer Care, I need assistance with Hello Premium services. Please guide me to the right service."
+    );
+    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+  }
+  ['topWaBtn','footerWaBtn','floatWaBtn'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('click', openWhatsApp);
+  });
+</script>
+
+</body>
+</html>
